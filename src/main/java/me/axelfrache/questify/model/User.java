@@ -25,8 +25,8 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
     
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false, unique = true, name = "user_name")
+    private String userName;
     
     @Column(nullable = false, unique = true)
     private String email;

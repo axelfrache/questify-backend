@@ -1,19 +1,16 @@
 package me.axelfrache.questify.service;
 
 import lombok.RequiredArgsConstructor;
-import me.axelfrache.questify.dto.UserDto;
 import me.axelfrache.questify.dto.auth.AuthRequest;
 import me.axelfrache.questify.dto.auth.AuthResponse;
 import me.axelfrache.questify.dto.auth.RegisterRequest;
 import me.axelfrache.questify.exception.BadRequestException;
-import me.axelfrache.questify.model.Grade;
 import me.axelfrache.questify.model.User;
 import me.axelfrache.questify.repository.GradeRepository;
 import me.axelfrache.questify.repository.UserRepository;
 import me.axelfrache.questify.security.JwtTokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +30,7 @@ public class AuthService {
 
     @Transactional
     public AuthResponse register(RegisterRequest request) {
-        if (userRepository.existsByUsername(request.getUsername()))
+        if (userRepository.existsByUserName(request.getUserName()))
             throw new BadRequestException("This username is already taken");
 
         if (userRepository.existsByEmail(request.getEmail()))
@@ -43,7 +40,7 @@ public class AuthService {
                 .orElse(null);
 
         var user = User.builder()
-                .username(request.getUsername())
+                .userName(request.getUserName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .level(1)
@@ -54,7 +51,7 @@ public class AuthService {
                 .build();
 
         var savedUser = userRepository.save(user);
-        var token = tokenProvider.generateToken(savedUser.getUsername(), savedUser.getId());
+        var token = tokenProvider.generateToken(savedUser.getUserName(), savedUser.getId());
         var userDto = userService.getCurrentUser(savedUser.getId());
         
         return AuthResponse.builder()
@@ -66,13 +63,13 @@ public class AuthService {
     @Transactional
     public AuthResponse login(AuthRequest request) {
         var authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword())
         );
 
-        var user = userRepository.findByUsername(request.getUsername())
+        var user = userRepository.findByUserName(request.getUserName())
                 .orElseThrow(() -> new BadRequestException("User not found"));
 
-        var token = tokenProvider.generateToken(user.getUsername(), user.getId());
+        var token = tokenProvider.generateToken(user.getUserName(), user.getId());
         
         var userDto = userService.getCurrentUser(user.getId());
         

@@ -59,7 +59,7 @@ public class UserService {
         
         return UserDto.builder()
                 .id(user.getId())
-                .username(user.getUsername())
+                .userName(user.getUserName())
                 .email(user.getEmail())
                 .level(user.getLevel())
                 .experience(user.getExperience())
