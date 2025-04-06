@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  backend:
+    environment:
+      - DATASOURCE_URL=jdbc:h2:file:/app/data/questify-db
+      - DATASOURCE_USERNAME=sa
+      - DATASOURCE_PASSWORD=password
+      - HIBERNATE_DDL_AUTO=update
+      - JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect 

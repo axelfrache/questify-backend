@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: questify-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=${DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=${HIBERNATE_DDL_AUTO}
+      - SPRING_JPA_DATABASE_PLATFORM=${JPA_DATABASE_PLATFORM}
+    volumes:
+      - questify_data:/app/data
+    networks:
+      - questify-network
+
+volumes:
+  questify_data:
+
+networks:
+  questify-network:
+    driver: bridge 
