@@ -1,8 +1,8 @@
 services:
   backend:
     environment:
-      - DATASOURCE_URL=jdbc:h2:file:/app/data/questify-db
-      - DATASOURCE_USERNAME=sa
-      - DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_URL=${DATASOURCE_URL}
+      - DATASOURCE_USERNAME=questify
+      - DATASOURCE_PASSWORD=questify
       - HIBERNATE_DDL_AUTO=update
-      - JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect 
+      - JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
