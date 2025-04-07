@@ -6,17 +6,18 @@ services:
       - "3000:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=${DATASOURCE_URL}
-      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
-      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=${HIBERNATE_DDL_AUTO}
-      - SPRING_JPA_DATABASE_PLATFORM=${JPA_DATABASE_PLATFORM}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/questify
+      - SPRING_DATASOURCE_USERNAME=questify
+      - SPRING_DATASOURCE_PASSWORD=questify
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
     volumes:
       - questify_data:/app/data
     networks:
       - questify-network
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   postgres:
     image: postgres:16-alpine
@@ -26,16 +27,16 @@ services:
       POSTGRES_USER: questify
       POSTGRES_PASSWORD: questify
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - questify-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U questify"]
       interval: 5s
       timeout: 5s
       retries: 5
-    networks:
-      - questify-network
 
 volumes:
   questify_data:
