@@ -19,19 +19,16 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        log.info("Initialisation des données prédéfinies...");
+        log.info("Starting data initialization");
         
-        // Initialiser les grades
         gradeService.initializeGrades();
-        log.info("Grades initialisés");
+        log.info("Predefined grades initialized");
         
-        // Initialiser les catégories prédéfinies
         categoryService.initializePredefinedCategories();
-        log.info("Catégories prédéfinies initialisées");
+        log.info("Predefined categories initialized");
         
-        // Initialiser les achievements
         achievementService.initializeAchievements();
-        log.info("Achievements initialisés");
+        log.info("Predefined achievements initialized");
         
         log.info("Initialisation des données terminée");
     }

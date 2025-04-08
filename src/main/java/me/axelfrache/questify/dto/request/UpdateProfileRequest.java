@@ -1,4 +1,4 @@
-package me.axelfrache.questify.dto.auth;
+package me.axelfrache.questify.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,16 +12,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+public class UpdateProfileRequest {
+    
     @NotBlank(message = "Username cannot be empty")
     @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
     private String userName;
     
     @NotBlank(message = "Email cannot be empty")
-    @Email(message = "Format d'email invalide")
+    @Email(message = "Invalid email format")
     private String email;
     
-    @NotBlank(message = "Password cannot be empty")
-    @Size(min = 6, message = "Password must be at least 6 characters long")
-    private String password;
+    // Optional profile picture as Base64 string (can be null)
+    private String profilePicture;
 }

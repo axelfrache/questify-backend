@@ -25,8 +25,8 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
     
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false, unique = true, name = "user_name")
+    private String userName;
     
     @Column(nullable = false, unique = true)
     private String email;
@@ -39,6 +39,10 @@ public class User {
     
     @Column(nullable = false)
     private int experience;
+    
+    @Lob
+    @Column(name = "profile_picture", columnDefinition = "BLOB")
+    private byte[] profilePicture;
     
     @ManyToOne
     @JoinColumn(name = "grade_id")

@@ -36,8 +36,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDto getCategoryById(UUID userId, UUID categoryId) {
         var user = getUserById(userId);
-        var category = getCategoryByIdAndValidateAccess(categoryId, user);
-        return mapToDto(category, user);
+        return mapToDto(getCategoryByIdAndValidateAccess(categoryId, user), user);
     }
 
     @Transactional

@@ -29,9 +29,9 @@ public class AchievementService {
 
     @Transactional(readOnly = true)
     public List<AchievementDto> getAllAchievements(UUID userId) {
-        User user = getUserById(userId);
+        var user = getUserById(userId);
         
-        List<Achievement> allAchievements = achievementRepository.findAll();
+        var allAchievements = achievementRepository.findAll();
         
         return allAchievements.stream()
                 .map(achievement -> mapToDto(achievement, user))
@@ -40,7 +40,7 @@ public class AchievementService {
 
     @Transactional(readOnly = true)
     public List<AchievementDto> getUnlockedAchievements(UUID userId) {
-        User user = getUserById(userId);
+        var user = getUserById(userId);
         
         return achievementRepository.findByUsers(user).stream()
                 .map(achievement -> mapToDto(achievement, user))
@@ -49,7 +49,7 @@ public class AchievementService {
 
     @Transactional(readOnly = true)
     public List<AchievementDto> getLockedAchievements(UUID userId) {
-        User user = getUserById(userId);
+        var user = getUserById(userId);
         
         return achievementRepository.findByUsersNotContaining(user).stream()
                 .map(achievement -> mapToDto(achievement, user))

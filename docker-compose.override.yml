@@ -1,0 +1,8 @@
+services:
+  backend:
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/questify
+      - SPRING_DATASOURCE_USERNAME=questify
+      - SPRING_DATASOURCE_PASSWORD=questify
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
