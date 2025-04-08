@@ -40,6 +40,10 @@ public class User {
     @Column(nullable = false)
     private int experience;
     
+    @Lob
+    @Column(name = "profile_picture", columnDefinition = "BLOB")
+    private byte[] profilePicture;
+    
     @ManyToOne
     @JoinColumn(name = "grade_id")
     private Grade currentGrade;

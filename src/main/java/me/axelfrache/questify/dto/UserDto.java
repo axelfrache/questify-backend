@@ -20,4 +20,5 @@ public class UserDto {
     private String gradeName;
     private int completedTasks;
     private int achievements;
+    private String profilePicture; // Base64 encoded image
 }
